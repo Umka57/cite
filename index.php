@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,11 +16,87 @@
             <a href="#" title="Магазин" onclick="slowScroll('#catalog')">Каталог</a>
             <a href="#" title="О нас" onclick="slowScroll('#aboutus')">О нас</a>
             <a href="#" title="Информация" onclick="slowScroll('#info')">Информация</a>
-            <a href="#" title="Авторизация" onclick="slowScroll('#auth')">Авторизация</a>
+            <a href="#" title="Авторизация" onclick="document.getElementById('auth').style.display='block'">Авторизация</a>
             <a href="#" title="Корзина" onclick="slowScroll('#cart')">Корзина</a>
         </div>
     </header>
 
+    <div id="auth" class="modal">
+        <span onclick="document.getElementById('auth').style.display='none'" class="close" title="Close Modal">&times;</span>
+      
+        <!-- Modal Content -->
+        <form class="modal-content animate">
+          <div class="container">
+            <label for="login"><b>Логин</b></label><br>
+            <input type="text" placeholder="Введите логин" name="login" required><br>
+      
+            <label for="password"><b>Пароль</b></label><br>
+            <input type="password" placeholder="Введите пароль" name="password" required><br>
+            <a href="#">Забыли пароль?</a><br>
+            
+            <button type="submit" id="login-btn">Войти</button><br>
+            <label><input type="checkbox" checked="checked" name="remember"> Remember me</label><br>
+            <label>У вас нет аккаунта?  </label><a href='#' onclick="document.getElementById('auth').style.display='none'; document.getElementById('reg').style.display='block';">Зарегистрируйтесь</a>
+          </div>
+      
+          <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('auth').style.display='none'" class="cancelbtn">Cancel</button>
+          </div>
+        </form>
+    </div>
+
+      <div id="reg" class="modal"><span onclick="document.getElementById('reg').style.display='none'" class="close" title="Close Modal">&times;</span>
+      
+        <!-- Modal Content -->
+        <form class="modal-content animate">
+          <div class="container">
+            
+            <label for="login"><b>Логин</b></label><br>
+            <input type="text" placeholder="Введите логин" name="login" required><br>
+      
+            <label for="email"><b>Email</b></label><br>
+            <input type="email" placeholder="Введите почту" name="email" required><br>
+
+            <label for="password"><b>Пароль</b></label><br>
+            <input type="password" placeholder="Введите пароль" name="password" required><br>
+
+            <label for="passwordrepeat"><b>Повторите пароль</b></label><br>
+            <input type="password" placeholder="Повторите пароль" name="passwordrepeat" required><br>
+            
+            <input type="checkbox" name="newsseller"> Получать новостную рассылку
+            
+            <button type="submit" id="reg-btn">Зарегистрироваться</button>
+            <label>У вас уже есть аккаунт?  </label><a href='#' onclick="document.getElementById('reg').style.display='none'; document.getElementById('auth').style.display='block';">Авторизируйтесь</a>
+          </div>
+      
+          <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('reg').style.display='none'" class="cancelbtn">Отмена</button>
+            <label class="msg"></label>
+            </div>
+        </form>
+        </div>
+      <script>
+        // Get the modal
+        var modal = document.getElementById('auth');
+        
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+        </script>
+        <script>
+            // Get the modal
+            var modal = document.getElementById('reg');
+            
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+            </script>
     <div id="top">
         <h1>Главный источник JDM деталей</h1>
         <h3>Собери машину своей мечты</h3>
@@ -31,10 +108,8 @@
         <div class="text">
             <span>Japanese Domestic Market (JDM) (англ. Японский отечественный рынок или Японский внутренний рынок) — термин, распространённый в отношении автомобилей (как и запчастей), продающихся на рынке Японии. 
                 Обычно модели автомобилей, предназначенных для Японии, отличаются от тех же моделей, предназначенных для других рынков, или же вовсе не имеют зарубежных аналогов.
-
                 Основными производителями моделей автомобилей для JDM являются японские же компании:
-                Toyota, Nissan, Honda, Mitsubishi, Mazda, Suzuki, Subaru, Isuzu, Daihatsu, Mitsuoka
-                Импорт на рынке JDM представлен незначительно, в основном моделями сегмента премиум и люкс, а также моделями японских фирм, выпускаемыми за рубежом.</span>
+                Toyota, Nissan, Honda, Mitsubishi, Mazda, Suzuki, Subaru, Isuzu, Daihatsu, Mitsuoka</span>
         </div>
     </div>
     <div id="overview">
@@ -74,6 +149,9 @@
     <div id="faq">
 
     </div>
+
+    <script src="/js/jquery-3.5.1.min.js"></script>
+    <script src="/js/main.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
         function slowScroll(id){
