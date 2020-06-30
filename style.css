@@ -25,6 +25,7 @@ header {
 header #logo {
     color: white;
     cursor: pointer;
+    text-decoration: none;
 }
 
 header #logo span{
@@ -312,7 +313,7 @@ header.fixed #logo {
     color: white;
 }
 #overview h2 {font-size: 4em;}
-#overview h4 {color: gray;font-size: 1.5em;}
+#overview h4 {color: #0de0ea;font-size: 1.5em;}
 
 #overview .img {
     float: left;
@@ -405,3 +406,25 @@ h1, h2, h3, h4, h5 {
 }
 
 .btn:hover {background-color: greenyellow;}
+
+.pagination {
+    display: inline-block;
+  }
+  
+  .pagination a {
+    color: rgb(255, 255, 255);
+    float: left;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+  
+  .pagination a.active {
+    background-color: rgb(11, 240, 221);
+    color: white;
+    border-radius: 5px;
+  }
+  
+  .pagination a:hover:not(.active) {
+    background-color: #ddd;
+    border-radius: 5px;
+  }

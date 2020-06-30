@@ -1,53 +1,51 @@
 //includes/auth.php
 
-$('#login-btn').click(function (e){
-    e.preventDafault();
+$('.login_btn').on('click',function (event) {
+    
+    event.preventDefault();
 
-    let login = $('input[name="login"]').val(),
-        password = $('input[name="password"]').val();
+    debugger;
+
         $.ajax({
-            url: 'includes/auth.php',
             type: 'POST',
+            url: 'includes/auth.php',
             dataType: 'json',
             data: {
-                login: login,
-                password: password
+                login: $('input[name="login"]').val(),
+                password: $('input[name="password"]').val()
             },
             success (data) {
-
                 if(data.status){
-                    document.location.href = '/profile.php';
+                    document.getElementById('auth').style.display='none';
                 } else {
-                    document.getElementById('msg').style.display='block'.textContent(data.message);
+                    document.getElementById('msg').style.display='block'.text(data.message);
                 }
             }
         })
 });
-$('#reg-btn').click(function (e){
-    e.preventDafault();
 
-    let login = $('input[name="login"]').val(),
-        password = $('input[name="password"]').val(),
-        email = $('input[name="email"]').val(),
-        newsseller = $('input[name="newsseller"]').val();
-
-        let formData = new FormData();
-            formData.append('login', login);
-            formData.append('password', password);
-            formData.append('email', email);
-            formData.append('newsseller', newsseller);
+$('.reg_btn').on('click',function (event) {
+    
+    event.preventDefault();
 
         $.ajax({
-            url: 'includes/auth.php',
             type: 'POST',
+            url: 'includes/registr.php',
             dataType: 'json',
-            data: formData,
+            data: {
+                login: $('input[name="reglogin"]').val(),
+                password: $('input[name="regpassword"]').val(),
+                passwordrepeat: $('input[name="passwordrepeat"]').val(),
+                email: $('input[name="email"]').val(),
+                newsseller: $('input[name="newsseller"]').val()
+            },
             success (data) {
-
                 if(data.status){
-                    document.location.href = '/profile.php';
+                    alert('Регистрация прошла успешно');
+                    document.getElementById('reg').style.display='none';
                 } else {
-                    document.getElementById('msg').style.display='block'.textContent(data.message);
+                    document.getElementById('msg').style.display='block';
+                    document.getElementById('msg').text(data.message);
                 }
             }
         })

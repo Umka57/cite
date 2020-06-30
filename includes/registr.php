@@ -1,46 +1,50 @@
 
 <?php
+    //require_once './js/main.js';
     require_once 'connect.php';
-    require_once 'main.js';
+
     $login = $_POST['login'];
     $password = $_POST['password'];
     $passwordrepeat = $_POST['passwordrepeat'];
     $email = $_POST['email'];
     $newsseller = $_POST['newsseller'];
 
-    if($message=TestLogin($login)!='Ok'){
-        $status = false;
-    }else{
+    
+    
+    // if($message=TestLogin($login)!='Ok'){
+    //     $status = false;
+    // }else{
         if($password === $passwordrepeat){
-            if(checkPassword(password)<3){
-                $status = false;
-                $message = 'Пароль слишком простой!';
-            }else{
+            // if(checkPassword($password) < 3){
+            //     $status = false;
+            //     $message = 'Пароль слишком простой!';
+            // }else{
                 $password = md5($password);
                 
-                $check_user = mysqli_query("SELECT * FROM 'users' WHERE 'login' = '$login'");
-                if(mysqli_num_rows($check_user) > 0){
+                $check_login = mysqli_query($connect, "SELECT * FROM `users` WHERE `login` = '$login'");
+
+                if(mysqli_num_rows($check_login) > 0){
                     $status = false;
-                    $message = 'Данный логин уже занят';
+                    $message = "Такой логин уже существует";
                 } else {
-                    $check_user = mysqli_query("SELECT * FROM 'users' WHERE 'email' = '$email'");
+                    $check_email = mysqli_query($connect, "SELECT * FROM `users` WHERE `email` = '$email'");
         
-                    if(mysqli_num_rows($check_user) > 0){
+                    if(mysqli_num_rows($check_email) > 0){
                         $status = false;
                         $message = 'Данный email уже занят';
                     } else {
-                        mysqli_query($connect,"INSERT INTO 'users' ('id','login','password','email','role','newsseller') VALUES (NULL,'$login','$password','$email',NULL,'$newsseller')");
+                        mysqli_query($connect, "INSERT INTO `users` (`login`, `password`, `email`, `newsseller`) VALUES ('$login','$password','$email','$newsseller')");
                         $status = true;
                         $message = 'Регистрация прошла успешно';
                     }
                 }
-            }
+            //}
     
         }else{
             $status = false;
             $message = 'Пароли не совпадают';
         }
-    }
+    //}
     $response = [
         "status" => $status,
         "message" => $message,
