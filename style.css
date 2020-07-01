@@ -109,10 +109,6 @@ button:hover {
     background-color: #f44336;
 }
 
-.container {
-    padding: 5%;
-}
-
 span.psw {
     float: right;
     padding-top: 16px;
@@ -408,7 +404,12 @@ h1, h2, h3, h4, h5 {
 .btn:hover {background-color: greenyellow;}
 
 .pagination {
-    display: inline-block;
+    align-self: center;
+    display: block;
+    padding: 10px; /* Поля вокруг текста */
+    margin: 0 auto; /* Выравниваем по центру */
+    text-align: center;
+    width:30%;
   }
   
   .pagination a {
@@ -416,6 +417,7 @@ h1, h2, h3, h4, h5 {
     float: left;
     padding: 8px 16px;
     text-decoration: none;
+    align-self: center;
   }
   
   .pagination a.active {
@@ -427,4 +429,46 @@ h1, h2, h3, h4, h5 {
   .pagination a:hover:not(.active) {
     background-color: #ddd;
     border-radius: 5px;
+  }
+
+  /* Каталог  */
+  .section{
+      padding-top: 100px;
+      padding-bottom: 100px;
+  }
+  .container{
+    padding: 5%;
+    display: grid;
+  }
+  .heading-block {
+      margin-bottom: 100px;
+      background-color: black;
+  }
+  .title {
+      font-size: 30px;
+      color:white;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      text-align: center;
+  }
+  .subtitle {
+      font-size: 12px;
+      color:  rgb(11, 240, 221);
+      font-weight: 300;
+      text-align: center;
+  }
+  .card {
+    background-color: white;
+    text-align: center;
+  }
+  .card__img{
+    margin-bottom: 20px;
+  }
+  .card__title {
+    color: black;
+
+  }
+  .card__price{
+    font-size: 13px;
+    color: deeppink;
   }

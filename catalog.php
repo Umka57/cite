@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php 
+    session_start(); 
+    require_once 'includes/pag.php'; 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +15,8 @@
 <body>
     <header>
         <div id="logo" onclick="slowScroll('#top')">
-            <a href="index.php" title="Главная" id="logo" style="text-decoration:none;"><span>JDMShop</span></a>
+            <a href="index.php" title="Главная" id="logo" style="text-decoration:none;">
+            <span>JDMShop</span></a>
         </div>
         <div class="about">
             <a href="#" title="Магазин" onclick="slowScroll('#catalog')">Каталог</a>
@@ -22,39 +26,56 @@
             <a href="#" title="Корзина" onclick="slowScroll('#cart')">Корзина</a>
         </div>
     </header>
-    <div id="overview">
-        <h2>Каталог товаров</h2>
-        <h4>Двигатели</h4>
+    <div class="section">
+        <div class="container">
+            <div class="heading-block">
+                <h2 class="title">Каталог товаров</h2>
+                <h3 class="sublitle">Двигатели</h3>
+            </div>
+            <?
+                $page = isset($_GET['page']) ? $_GET['page']: 1 ;
 
-        <div class="img">
-            <img src="https://i.pinimg.com/564x/25/02/e0/2502e0a0cbdb2f5519d58809f945c845.jpg" alt="1JZ">
-            <span>Надежные двигатели</span>
-            
-        </div>
-        <div class="img">
-            <img src="https://i.pinimg.com/564x/e9/53/51/e95351bbdaf31d1de16e5e304a3a87ad.jpg" alt="Parts">
-            <span>Большой выбор расходников</span>
-        </div>
+                $limit = 3;
+                $offset = $limit * ($page - 1);
 
-        <div class="img">
-            <img src="https://2.bp.blogspot.com/-VC2p_94OwgY/Vx2Sbtkc-jI/AAAAAAAAAJQ/mc4xbdkxJvcQD3LwT3JFhkGJ0Vyv6Cm0wCK4B/s1600-r/performance-car-parts-brands.jpg" alt="Brands">
-            <span>Партнерские бренды</span>
-        </div>
-        <div class="img">
-            <img src="https://cdn.shopify.com/s/files/1/1453/6614/products/monstersmooother_large.png?v=1543586403">
-            <span>Различный мерч</span>
+                $items = get_items($limit,$offset);
+
+                foreach($items as $item){ 
+                    echo "<div class=\"card\">
+                            <div class=\"card__image\"><img src=\"",$item['picture'],"\"></div>
+                            <div class=\"card__title\">",$item['name'],"</div>
+                            <div class=\"card__price\">
+                                <span>",$item['price'],"</span>
+                            </div>
+                        </div>";
+                } ?>
         </div>
         <div class="pagination">
-            <a href="#">&laquo;</a>
-            <a href="#" class="active">1</a>
-            <a href="#">2</a>
-            <a href="#">3</a>
-            <a href="#">4</a>
-            <a href="#">5</a>
-            <a href="#">6</a>
-            <a href="#">&raquo;</a>
+            <?
+
+                $pagesCount = count_pages($limit);
+
+                if($page != 1) {
+                    $prev = $page - 1;
+                    echo "<a href=\"?page=$prev\">«</a>";
+                }
+        
+                for($i = 1; $i <=$pagesCount;$i++){
+                    if($page = $i){
+                        echo "<a href=\"?page=$i\" class=\"active\">$i</a>";
+                    } else {
+                        echo "<a href=\"?page=$i\">$i</a>";
+                    }
+                }
+        
+                if($page != $pagesCount) {
+                    $next = $page + 1;
+                    echo "<a href=\"?page=$next\">»</a>";
+                }
+            ?>
         </div>
     </div>
+        
     <script>
         function slowScroll(id){
             $('html, body').animate({
