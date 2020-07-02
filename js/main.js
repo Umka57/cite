@@ -1,10 +1,8 @@
-//includes/auth.php
+
 
 $('.login_btn').on('click',function (event) {
     
     event.preventDefault();
-
-    debugger;
 
         $.ajax({
             type: 'POST',
@@ -17,6 +15,7 @@ $('.login_btn').on('click',function (event) {
             success (data) {
                 if(data.status){
                     document.getElementById('auth').style.display='none';
+                    // header("Location: ../index.php");
                 } else {
                     document.getElementById('msg').style.display='block'.text(data.message);
                 }
@@ -48,6 +47,80 @@ $('.reg_btn').on('click',function (event) {
                     document.getElementById('msg').text(data.message);
                 }
             }
+        })
+});
+$('.edituser_btn').on('click',function (event) {
+    
+    event.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: 'includes/edituser.php',
+            dataType: 'json',
+            data: {
+                id: $('input[name="id"]').val(),
+                login: $('input[name="editlogin"]').val(),
+                password: $('input[name="editpassword"]').val(),
+                email: $('input[name="editemail"]').val()
+            },
+            success (data) {
+                if(data.status){
+                    alert(data.message);
+                    document.getElementById('edituser').style.display='none';
+                } else {
+                    document.getElementById('msg').style.display='block';
+                    document.getElementById('msg').text(data.message);
+                }
+            }
+        })
+});
+// $('#picture').on("input keyup",function (event){
+//     document.getElementById('pictureprev').style.display='block';
+//     document.getElementById('pictureprev').src = document.getElementById('picture').text();
+// });
+$('.addproduct_btn').on('click',function (event) {
+    
+    event.preventDefault();
+
+
+    $.ajax({
+        type: 'POST',
+        url: 'includes/addproduct.php',
+        dataType: 'json',
+        data: {
+        name: $('input[name="name"]').val(),
+        price: $('input[name="price"]').val(),
+        picture: $('input[name="picture"]').val()
+    },
+    success (data) {
+        if(data.status){
+            document.getElementById('addproduct').style.display='none';
+        } else {
+            document.getElementById('msg').style.display='block'.text(data.message);
+        }
+    }
+    })
+    });
+    $('.adduser_btn').on('click',function (event) {
+    
+        event.preventDefault();
+
+        $.ajax({
+            type: 'POST',
+            url: 'includes/adduser.php',
+            dataType: 'json',
+            data: {
+            login: $('input[name="addlogin"]').val(),
+            password: $('input[name="addpassword"]').val(),
+            email: $('input[name="addemail"]').val()
+        },
+        success (data) {
+            if(data.status){
+                document.getElementById('adduser').style.display='none';
+            } else {
+                document.getElementById('msg').style.display='block'.text(data.message);
+            }
+        }
         })
 });
 function checkPassword(password) {

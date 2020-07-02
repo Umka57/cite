@@ -1,6 +1,6 @@
 <?php 
     require_once 'connect.php';
-
+    session_start();
     $login = $_POST['login'];
     $password = md5($_POST['password']);
     
@@ -18,7 +18,8 @@
 
         $response = [
             "status" => true,
-            "message" => 'Добро пожаловать'
+            "message" => 'Добро пожаловать',
+            "user" => $user['login']
         ];
 
     }else{

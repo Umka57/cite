@@ -1,6 +1,7 @@
 <?php 
     session_start(); 
-    require_once 'includes/pag.php'; 
+    require_once 'includes/pag.php';
+    require_once 'includes/connect.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,59 +14,46 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <header>
-        <div id="logo" onclick="slowScroll('#top')">
-            <a href="index.php" title="Главная" id="logo" style="text-decoration:none;">
-            <span>JDMShop</span></a>
-        </div>
-        <div class="about">
-            <a href="#" title="Магазин" onclick="slowScroll('#catalog')">Каталог</a>
-            <a href="#" title="О нас" onclick="slowScroll('#aboutus')">О нас</a>
-            <a href="#" title="Информация" onclick="slowScroll('#info')">Информация</a>
-            <a href="#" title="Авторизация" onclick="document.getElementById('auth').style.display='block'">Авторизация</a>
-            <a href="#" title="Корзина" onclick="slowScroll('#cart')">Корзина</a>
-        </div>
-    </header>
+<?php include 'header.php';?>
     <div class="section">
         <div class="container">
             <div class="heading-block">
                 <h2 class="title">Каталог товаров</h2>
-                <h3 class="sublitle">Двигатели</h3>
+                <h3 class="subtitle">Двигатели</h3>
             </div>
             <?
                 $page = isset($_GET['page']) ? $_GET['page']: 1 ;
 
-                $limit = 3;
+                $limit = 5;
                 $offset = $limit * ($page - 1);
-
-                $items = get_items($limit,$offset);
+                
+                $items = get_items($limit,$offset,$connect);
 
                 foreach($items as $item){ 
-                    echo "<div class=\"card\">
-                            <div class=\"card__image\"><img src=\"",$item['picture'],"\"></div>
+                    echo "<div class=\"card\" style=\"display: inline-block; margin:auto;padding:20px;\">
+                            <div class=\"card__image\"><img src=\"",$item['picture'],"\" style=\"width:300px;height:300px;border-radius:4px;\"></div>
                             <div class=\"card__title\">",$item['name'],"</div>
-                            <div class=\"card__price\">
-                                <span>",$item['price'],"</span>
-                            </div>
+                            <div class=\"card__price\"><span>",$item['price'],"</span></div>
                         </div>";
-                } ?>
+                } 
+                ?>
         </div>
         <div class="pagination">
             <?
-
-                $pagesCount = count_pages($limit);
+                $pagesCount = count_pages($limit,$connect);
 
                 if($page != 1) {
                     $prev = $page - 1;
                     echo "<a href=\"?page=$prev\">«</a>";
                 }
         
-                for($i = 1; $i <=$pagesCount;$i++){
-                    if($page = $i){
-                        echo "<a href=\"?page=$i\" class=\"active\">$i</a>";
+                for($i = 1; $i <= $pagesCount;$i++){
+                    if($page == $i){
+                        $class = 'class="active"';
                     } else {
-                        echo "<a href=\"?page=$i\">$i</a>";
+                        $class='';
                     }
+                    echo "<a href=\"?page=$i\"$class>$i</a>";
                 }
         
                 if($page != $pagesCount) {
